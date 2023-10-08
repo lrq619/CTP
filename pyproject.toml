@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ctp"
+version = "0.0.1"
+authors = [
+  { name="lrq619", email="lrq619@outlook" },
+]
+description = "A package that collects data then process"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/lrq619/CTP"
+"Bug Tracker" = "https://github.com/lrq619/CTP/issues"

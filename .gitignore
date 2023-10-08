@@ -1,0 +1,4 @@
+*logs
+*.log
+dist
+*__pycache__

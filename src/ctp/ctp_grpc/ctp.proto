@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package ctp;
+
+// Service definition
+service CtpService {
+    rpc AppendRun(AppendRunRequest) returns (AppendRunResponse);
+    rpc GetRun(GetRunRequest) returns (GetRunResponse);
+}
+
+// Message definitions
+
+// AppendRun
+message AppendRunRequest {
+    string name = 1;
+}
+
+message AppendRunResponse {
+    int64 run_id = 1;
+}
+
+// GetRun
+message GetRunRequest {
+    string name = 1;
+    int64 exp_id = 2;
+}
+
+message GetRunResponse {
+    int64 run_id = 1;
+}
