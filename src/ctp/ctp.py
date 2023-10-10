@@ -37,7 +37,7 @@ def start_listen(ip : str = "localhost", port : int = 50057) -> None:
         grpc_server.stop(0)
 
 def start_collect(exp_label : str, ip : str = "localhost", port : int = 50057) -> Run:
-    pass
+    return Run()
 
 def stop_collect() -> None:
     pass

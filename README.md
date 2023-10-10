@@ -14,18 +14,18 @@ ctp.start_listen(ip = "localhost", port=50057)
 Example usage of collecting data and transfer it to server:
 ```python
 import ctp
-run = ctp.start_collect(exp_label="sample_exp", ip="localhost", port=50057)
+run = ctp.start_collect("sample_exp")
 ```
 This appends a new run of the experiment, to collect data to new run:
 ```python
-sample_data = run.collect(data_label = "sample_data")
+sample_data = run.collect("sample_data")
 for i in range(10):
     sample_data.append(i)
 ```
 Or you can also pass a list created by yourself by:
 ```python
 sample_data = [] # sample data list created by your self
-run.monitor(data_label = "sample_data", value = sample_data)
+run.monitor("sample_data", sample_data)
 for i in range(10):
     sample_data.append(i)
 ```
@@ -38,7 +38,7 @@ run.stop_collect()
 To process data from other machines:
 ```python
 import ctp
-run = ctp.start_process(exp_label="sample_exp", tag = "lastest", ip="localhost", port=50057)
+run = ctp.start_process("sample_exp")
 ```
 get sample data:
 ```python
