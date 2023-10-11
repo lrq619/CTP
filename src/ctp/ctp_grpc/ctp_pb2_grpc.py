@@ -24,10 +24,20 @@ class CtpServiceStub(object):
                 request_serializer=ctp__pb2.AppendRunRequest.SerializeToString,
                 response_deserializer=ctp__pb2.AppendRunResponse.FromString,
                 )
-        self.GetRun = channel.unary_unary(
-                '/ctp.CtpService/GetRun',
-                request_serializer=ctp__pb2.GetRunRequest.SerializeToString,
-                response_deserializer=ctp__pb2.GetRunResponse.FromString,
+        self.GetLatestRun = channel.unary_unary(
+                '/ctp.CtpService/GetLatestRun',
+                request_serializer=ctp__pb2.GetLatestRunRequest.SerializeToString,
+                response_deserializer=ctp__pb2.GetLatestRunResponse.FromString,
+                )
+        self.QueryRecords = channel.unary_unary(
+                '/ctp.CtpService/QueryRecords',
+                request_serializer=ctp__pb2.QueryRecordsRequest.SerializeToString,
+                response_deserializer=ctp__pb2.QueryRecordsResponse.FromString,
+                )
+        self.SyncRecords = channel.unary_unary(
+                '/ctp.CtpService/SyncRecords',
+                request_serializer=ctp__pb2.SyncRecordsRequest.SerializeToString,
+                response_deserializer=ctp__pb2.SyncRecordsResponse.FromString,
                 )
 
 
@@ -41,7 +51,19 @@ class CtpServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetRun(self, request, context):
+    def GetLatestRun(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def QueryRecords(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SyncRecords(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -55,10 +77,20 @@ def add_CtpServiceServicer_to_server(servicer, server):
                     request_deserializer=ctp__pb2.AppendRunRequest.FromString,
                     response_serializer=ctp__pb2.AppendRunResponse.SerializeToString,
             ),
-            'GetRun': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetRun,
-                    request_deserializer=ctp__pb2.GetRunRequest.FromString,
-                    response_serializer=ctp__pb2.GetRunResponse.SerializeToString,
+            'GetLatestRun': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLatestRun,
+                    request_deserializer=ctp__pb2.GetLatestRunRequest.FromString,
+                    response_serializer=ctp__pb2.GetLatestRunResponse.SerializeToString,
+            ),
+            'QueryRecords': grpc.unary_unary_rpc_method_handler(
+                    servicer.QueryRecords,
+                    request_deserializer=ctp__pb2.QueryRecordsRequest.FromString,
+                    response_serializer=ctp__pb2.QueryRecordsResponse.SerializeToString,
+            ),
+            'SyncRecords': grpc.unary_unary_rpc_method_handler(
+                    servicer.SyncRecords,
+                    request_deserializer=ctp__pb2.SyncRecordsRequest.FromString,
+                    response_serializer=ctp__pb2.SyncRecordsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -89,7 +121,7 @@ class CtpService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetRun(request,
+    def GetLatestRun(request,
             target,
             options=(),
             channel_credentials=None,
@@ -99,8 +131,42 @@ class CtpService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ctp.CtpService/GetRun',
-            ctp__pb2.GetRunRequest.SerializeToString,
-            ctp__pb2.GetRunResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/ctp.CtpService/GetLatestRun',
+            ctp__pb2.GetLatestRunRequest.SerializeToString,
+            ctp__pb2.GetLatestRunResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def QueryRecords(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ctp.CtpService/QueryRecords',
+            ctp__pb2.QueryRecordsRequest.SerializeToString,
+            ctp__pb2.QueryRecordsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SyncRecords(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ctp.CtpService/SyncRecords',
+            ctp__pb2.SyncRecordsRequest.SerializeToString,
+            ctp__pb2.SyncRecordsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

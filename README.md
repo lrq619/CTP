@@ -42,24 +42,25 @@ run = ctp.start_process("sample_exp")
 ```
 get sample data:
 ```python
-sample_data = run.process(data_label="sample_data")
+sample_data = run.process("sample_data")
 ```
 ## API
 ### ctp
 ```python
 def start_listen(ip : str = "localhost", port : int = 50057) -> None:
 
-def start_collect(exp_label : str, ip : str = "localhost", port : int = 50057) -> ctp.Run:
+def start_collect(exp_name : str, ip : str = "localhost", port : int = 50057) -> ctp.Run:
 
-def stop_collect() -> None:
 
-def start_process(exp_label : str, tag : str = "latest", ip : str = "localhost", port : int = 50057) -> ctp.Run:
+def start_process(exp_name : str, ip : str = "localhost", port : int = 50057) -> ctp.Run:
 ```
 ### ctp.Run:
 ```python
-def collect(self, data_label : str) -> List[any]:
+def collect(self, user_label : str, data : any = None, prefix : str = '_') -> List[any]:
 
-def monitor(self, data_label : str, value : List[any]) -> None:
+def monitor(self, user_label : str, datas : List[any], prefix : str = '_') -> None:
 
-def process(self, data_label : str) -> List[any]:
+def stop_collect() -> None:
+
+def process(self, user_label : str = None) -> Optional[dict[str,List[any]],List[any]]:
 ```

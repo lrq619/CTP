@@ -6,13 +6,14 @@ package ctp;
 service CtpService {
     rpc AppendRun(AppendRunRequest) returns (AppendRunResponse);
     rpc GetRun(GetRunRequest) returns (GetRunResponse);
+    rpc SyncRecords(SyncRecordsRequest) returns (SyncRecordsResponse);
 }
 
 // Message definitions
 
 // AppendRun
 message AppendRunRequest {
-    string name = 1;
+    string exp_name = 1;
 }
 
 message AppendRunResponse {
@@ -21,10 +22,22 @@ message AppendRunResponse {
 
 // GetRun
 message GetRunRequest {
-    string name = 1;
-    int64 exp_id = 2;
+    string exp_name = 1;
+    int64 run_id = 2;
 }
 
 message GetRunResponse {
-    int64 run_id = 1;
+    bytes run_bytes;
+}
+
+
+//SyncRecords
+message SyncRecordsRequest {
+    string exp_name = 1;
+    int64 run_id = 2;
+    bytes records = 3;
+}
+
+message SyncRecordsResponse {
+    repeated string successful_labels = 1; // successful labels
 }

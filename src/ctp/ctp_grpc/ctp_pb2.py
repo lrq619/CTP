@@ -14,14 +14,18 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\tctp.proto\x12\x03\x63tp\" \n\x10\x41ppendRunRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"#\n\x11\x41ppendRunResponse\x12\x0e\n\x06run_id\x18\x01 \x01(\x03\"-\n\rGetRunRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x65xp_id\x18\x02 \x01(\x03\" \n\x0eGetRunResponse\x12\x0e\n\x06run_id\x18\x01 \x01(\x03\x32{\n\nCtpService\x12:\n\tAppendRun\x12\x15.ctp.AppendRunRequest\x1a\x16.ctp.AppendRunResponse\x12\x31\n\x06GetRun\x12\x12.ctp.GetRunRequest\x1a\x13.ctp.GetRunResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\tctp.proto\x12\x03\x63tp\"$\n\x10\x41ppendRunRequest\x12\x10\n\x08\x65xp_name\x18\x01 \x01(\t\"#\n\x11\x41ppendRunResponse\x12\x0e\n\x06run_id\x18\x01 \x01(\x03\"\'\n\x13GetLatestRunRequest\x12\x10\n\x08\x65xp_name\x18\x01 \x01(\t\"&\n\x14GetLatestRunResponse\x12\x0e\n\x06run_id\x18\x01 \x01(\x03\"G\n\x13QueryRecordsRequest\x12\x10\n\x08\x65xp_name\x18\x01 \x01(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\x03\x12\x0e\n\x06labels\x18\x03 \x03(\t\"\'\n\x14QueryRecordsResponse\x12\x0f\n\x07records\x18\x01 \x01(\x0c\"G\n\x12SyncRecordsRequest\x12\x10\n\x08\x65xp_name\x18\x01 \x01(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\x03\x12\x0f\n\x07records\x18\x03 \x01(\x0c\"0\n\x13SyncRecordsResponse\x12\x19\n\x11successful_labels\x18\x01 \x03(\t2\x94\x02\n\nCtpService\x12:\n\tAppendRun\x12\x15.ctp.AppendRunRequest\x1a\x16.ctp.AppendRunResponse\x12\x43\n\x0cGetLatestRun\x12\x18.ctp.GetLatestRunRequest\x1a\x19.ctp.GetLatestRunResponse\x12\x43\n\x0cQueryRecords\x12\x18.ctp.QueryRecordsRequest\x1a\x19.ctp.QueryRecordsResponse\x12@\n\x0bSyncRecords\x12\x17.ctp.SyncRecordsRequest\x1a\x18.ctp.SyncRecordsResponseb\x06proto3')
 
 
 
 _APPENDRUNREQUEST = DESCRIPTOR.message_types_by_name['AppendRunRequest']
 _APPENDRUNRESPONSE = DESCRIPTOR.message_types_by_name['AppendRunResponse']
-_GETRUNREQUEST = DESCRIPTOR.message_types_by_name['GetRunRequest']
-_GETRUNRESPONSE = DESCRIPTOR.message_types_by_name['GetRunResponse']
+_GETLATESTRUNREQUEST = DESCRIPTOR.message_types_by_name['GetLatestRunRequest']
+_GETLATESTRUNRESPONSE = DESCRIPTOR.message_types_by_name['GetLatestRunResponse']
+_QUERYRECORDSREQUEST = DESCRIPTOR.message_types_by_name['QueryRecordsRequest']
+_QUERYRECORDSRESPONSE = DESCRIPTOR.message_types_by_name['QueryRecordsResponse']
+_SYNCRECORDSREQUEST = DESCRIPTOR.message_types_by_name['SyncRecordsRequest']
+_SYNCRECORDSRESPONSE = DESCRIPTOR.message_types_by_name['SyncRecordsResponse']
 AppendRunRequest = _reflection.GeneratedProtocolMessageType('AppendRunRequest', (_message.Message,), {
   'DESCRIPTOR' : _APPENDRUNREQUEST,
   '__module__' : 'ctp_pb2'
@@ -36,32 +40,68 @@ AppendRunResponse = _reflection.GeneratedProtocolMessageType('AppendRunResponse'
   })
 _sym_db.RegisterMessage(AppendRunResponse)
 
-GetRunRequest = _reflection.GeneratedProtocolMessageType('GetRunRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETRUNREQUEST,
+GetLatestRunRequest = _reflection.GeneratedProtocolMessageType('GetLatestRunRequest', (_message.Message,), {
+  'DESCRIPTOR' : _GETLATESTRUNREQUEST,
   '__module__' : 'ctp_pb2'
-  # @@protoc_insertion_point(class_scope:ctp.GetRunRequest)
+  # @@protoc_insertion_point(class_scope:ctp.GetLatestRunRequest)
   })
-_sym_db.RegisterMessage(GetRunRequest)
+_sym_db.RegisterMessage(GetLatestRunRequest)
 
-GetRunResponse = _reflection.GeneratedProtocolMessageType('GetRunResponse', (_message.Message,), {
-  'DESCRIPTOR' : _GETRUNRESPONSE,
+GetLatestRunResponse = _reflection.GeneratedProtocolMessageType('GetLatestRunResponse', (_message.Message,), {
+  'DESCRIPTOR' : _GETLATESTRUNRESPONSE,
   '__module__' : 'ctp_pb2'
-  # @@protoc_insertion_point(class_scope:ctp.GetRunResponse)
+  # @@protoc_insertion_point(class_scope:ctp.GetLatestRunResponse)
   })
-_sym_db.RegisterMessage(GetRunResponse)
+_sym_db.RegisterMessage(GetLatestRunResponse)
+
+QueryRecordsRequest = _reflection.GeneratedProtocolMessageType('QueryRecordsRequest', (_message.Message,), {
+  'DESCRIPTOR' : _QUERYRECORDSREQUEST,
+  '__module__' : 'ctp_pb2'
+  # @@protoc_insertion_point(class_scope:ctp.QueryRecordsRequest)
+  })
+_sym_db.RegisterMessage(QueryRecordsRequest)
+
+QueryRecordsResponse = _reflection.GeneratedProtocolMessageType('QueryRecordsResponse', (_message.Message,), {
+  'DESCRIPTOR' : _QUERYRECORDSRESPONSE,
+  '__module__' : 'ctp_pb2'
+  # @@protoc_insertion_point(class_scope:ctp.QueryRecordsResponse)
+  })
+_sym_db.RegisterMessage(QueryRecordsResponse)
+
+SyncRecordsRequest = _reflection.GeneratedProtocolMessageType('SyncRecordsRequest', (_message.Message,), {
+  'DESCRIPTOR' : _SYNCRECORDSREQUEST,
+  '__module__' : 'ctp_pb2'
+  # @@protoc_insertion_point(class_scope:ctp.SyncRecordsRequest)
+  })
+_sym_db.RegisterMessage(SyncRecordsRequest)
+
+SyncRecordsResponse = _reflection.GeneratedProtocolMessageType('SyncRecordsResponse', (_message.Message,), {
+  'DESCRIPTOR' : _SYNCRECORDSRESPONSE,
+  '__module__' : 'ctp_pb2'
+  # @@protoc_insertion_point(class_scope:ctp.SyncRecordsResponse)
+  })
+_sym_db.RegisterMessage(SyncRecordsResponse)
 
 _CTPSERVICE = DESCRIPTOR.services_by_name['CtpService']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   _APPENDRUNREQUEST._serialized_start=18
-  _APPENDRUNREQUEST._serialized_end=50
-  _APPENDRUNRESPONSE._serialized_start=52
-  _APPENDRUNRESPONSE._serialized_end=87
-  _GETRUNREQUEST._serialized_start=89
-  _GETRUNREQUEST._serialized_end=134
-  _GETRUNRESPONSE._serialized_start=136
-  _GETRUNRESPONSE._serialized_end=168
-  _CTPSERVICE._serialized_start=170
-  _CTPSERVICE._serialized_end=293
+  _APPENDRUNREQUEST._serialized_end=54
+  _APPENDRUNRESPONSE._serialized_start=56
+  _APPENDRUNRESPONSE._serialized_end=91
+  _GETLATESTRUNREQUEST._serialized_start=93
+  _GETLATESTRUNREQUEST._serialized_end=132
+  _GETLATESTRUNRESPONSE._serialized_start=134
+  _GETLATESTRUNRESPONSE._serialized_end=172
+  _QUERYRECORDSREQUEST._serialized_start=174
+  _QUERYRECORDSREQUEST._serialized_end=245
+  _QUERYRECORDSRESPONSE._serialized_start=247
+  _QUERYRECORDSRESPONSE._serialized_end=286
+  _SYNCRECORDSREQUEST._serialized_start=288
+  _SYNCRECORDSREQUEST._serialized_end=359
+  _SYNCRECORDSRESPONSE._serialized_start=361
+  _SYNCRECORDSRESPONSE._serialized_end=409
+  _CTPSERVICE._serialized_start=412
+  _CTPSERVICE._serialized_end=688
 # @@protoc_insertion_point(module_scope)
