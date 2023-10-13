@@ -9,7 +9,7 @@ test: generate_proto
 build: test
 	@python -m build
 
-dist: build
+upload: build
 	@python -m twine upload --repository testpypi dist/*
 
 freeze:
@@ -17,3 +17,6 @@ freeze:
 
 install_dependency:
 	@pip install -r requirements.txt
+
+clean:
+	@rm dist/*
