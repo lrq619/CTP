@@ -1,13 +1,13 @@
 # CTP
 A python data collection library 
 ## Usage:
-```python
-pip install ctp
+```bash
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple cthenp
 ```
 ### Server:
 To start a server locally:
 ```python
-import ctp
+import cthenp as ctp
 ctp.start_listen(ip = "localhost", port=50057)
 ```
 ### Collect:
