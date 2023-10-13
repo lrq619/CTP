@@ -1,4 +1,12 @@
 # Developers Guide
+First install all required packages by:
+```
+pip install -r requirements.txt
+```
+or
+```
+conda craete --name ctp --file requirements.txt
+```
 
 ## Architecture
 CTP uses architecture of: Experiment -> Run -> Record

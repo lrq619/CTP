@@ -1,9 +1,9 @@
 # This is the manager of Experiments and Run
 from typing import List, Dict, TypeVar, Generic
 from .run import Run
+from .experiment import Experiment
 from .utils import logger
 
-MAXRUNS = 20
 
 class Manager:
     def __init__(self) -> None:
@@ -21,61 +21,30 @@ class Manager:
     def get_run(self, exp_name : str, run_id : int) -> Run:
         try:
             exp = self.experiments[exp_name]
+            if run_id == -1:
+               return exp.get_latest_run() 
             run = exp.get_run(run_id)
-            logger.debug(f"manager finds run_{run_id} for {exp_name}")
+            logger.debug(f"manager finds {run}")
             return run
         except:
-            logger.warning(f"manager cannot get run for: {exp_name}:{run_id}")
-            return Run(-1)
+            logger.warning(f"manager cannot get run for: [{exp_name}:{run_id}]")
+            return Run()
 
 
     def sync(self, exp_name : str, run_id : int, records : Dict[str, List[any]]) -> List[str]:
-        pass 
+        try:
+            exp = self.experiments[exp_name]
+            run = exp.get_run(run_id)
+            logger.debug(f"manager starts sync on {run}")
+            for label in records.keys():
+                if label not in run.records:
+                    run.records[label] = records[label]
+                else:
+                    run.records[label] += records[label]
+            return records.keys()
+        except Exception as e:
+            logger.warning(f"manager cannot sync run for [{exp_name}:{run_id}], error: {e}")
 
 
-class Experiment:
-    def __init__(self, exp_name : str) -> None:
-        self.exp_name : str = exp_name
-        self.runs : WrapRuns = WrapRuns(MAXRUNS) 
-        self.latest_run_id : int= -1
-
-    def append_run(self) -> int:
-        self.latest_run_id += 1
-        new_run = Run(self.latest_run_id)
-        self.runs.append(new_run)
-        return self.latest_run_id
-
-
-    def get_latest_run_id(self):
-        return self.latest_run_id
-
-    def get_run(self, run_id) -> Run:
-        self.runs.get_run(run_id)
-
-
-class WrapRuns:
-    def __init__(self, length : int) -> None:
-        assert length > 0
-        self.runs : List[Run] = [None for _ in range(length)]
-        self.next_pos = 0
-        self.length = length
-    
-    def append(self, run : Run):
-        self._list[self.next_pos] = run
-        self.next_pos += 1
-        if self.next_pos >= self.length:
-            self.next_pos = 0
-
-    def get_latest_run(self) -> Run:
-        latest_pos = self.next_pos - 1
-        if latest_pos < 0:
-            latest_pos = 0
-        return self.runs[latest_pos]
-
-    def get_run(self, run_id : int) -> Run:
-        for run in self.runs:
-            if run.run_id == run_id:
-                return run
-        raise ValueError(f"Cannot find run_id {run_id}")
         
 

@@ -14,7 +14,7 @@ ctp.start_listen(ip = "localhost", port=50057)
 Example usage of collecting data and transfer it to server:
 ```python
 import ctp
-run = ctp.start_collect("sample_exp")
+run = ctp.append_run("sample_exp")
 ```
 This appends a new run of the experiment, to collect data to new run:
 ```python
@@ -38,7 +38,7 @@ run.stop_collect()
 To process data from other machines:
 ```python
 import ctp
-run = ctp.start_process("sample_exp")
+run = ctp.get_run("sample_exp")
 ```
 get sample data:
 ```python
@@ -49,10 +49,10 @@ sample_data = run.process("sample_data")
 ```python
 def start_listen(ip : str = "localhost", port : int = 50057) -> None:
 
-def start_collect(exp_name : str, ip : str = "localhost", port : int = 50057) -> ctp.Run:
+def append_run(exp_name : str, ip : str = "localhost", port : int = 50057) -> ctp.Run:
 
 
-def start_process(exp_name : str, ip : str = "localhost", port : int = 50057) -> ctp.Run:
+def get_run(exp_name : str, ip : str = "localhost", port : int = 50057) -> ctp.Run:
 ```
 ### ctp.Run:
 ```python
