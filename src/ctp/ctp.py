@@ -2,7 +2,8 @@ import grpc
 import concurrent.futures as futures
 import pickle
 import threading
-from typing import List
+import json
+from typing import List, Dict
 
 from .run import Run, RunStatus
 from .ctp_grpc import ctp_pb2
@@ -12,6 +13,15 @@ from .manager import Manager
 
 stop_event = threading.Event()
 cur_run = Run()
+CONF_FILE_PATH = "../../conf.json"
+
+conf : Dict[any]= {}
+with open(CONF_FILE_PATH, 'r') as f:
+    conf = json.load(f)
+
+DEFAULT_IP = conf.get("DEFAULT_IP", DEFAULT_IP)
+DEFAULT_PORT = conf.get("DEFAULT_PORT", DEFAULT_PORT)
+
 
 
 class CtpService(ctp_pb2_grpc.CtpServiceServicer):
@@ -48,7 +58,7 @@ class CtpService(ctp_pb2_grpc.CtpServiceServicer):
 
         return ctp_pb2.SyncRecordsResponse(successful_labels = successful_labels)
 
-def init_grpc_server(ip : str = "localhost", port : int = 50057) -> any:
+def init_grpc_server(ip : str = DEFAULT_IP, port : int = DEFAULT_PORT) -> any:
 
     # Create a gRPC server
     grpc_server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -72,7 +82,7 @@ def _server_run(ip: str, port: int) -> None:
     finally:
         grpc_server.stop(0)
 
-def start_listen(ip: str = "localhost", port: int = 50057) -> None:
+def start_listen(ip: str = DEFAULT_IP, port: int = DEFAULT_PORT) -> None:
     stop_event.clear()
     server_thread = threading.Thread(target=_server_run, args=(ip, port))
     server_thread.start()
@@ -80,7 +90,7 @@ def start_listen(ip: str = "localhost", port: int = 50057) -> None:
 def stop_listen() -> None:
     stop_event.set()
 
-def append_run(exp_name : str, ip : str = "localhost", port : int = 50057) -> Run:
+def append_run(exp_name : str, ip : str = DEFAULT_IP, port : int = DEFAULT_PORT) -> Run:
     try:
         channel = grpc.insecure_channel(f"{ip}:{port}")
         stub = ctp_pb2_grpc.CtpServiceStub(channel)
@@ -97,7 +107,7 @@ def append_run(exp_name : str, ip : str = "localhost", port : int = 50057) -> Ru
     return run
 
 
-def get_run(exp_name : str, run_id : int = -1, is_collect = False ,ip : str = "localhost", port : int = 50057) -> Run:
+def get_run(exp_name : str, run_id : int = -1, is_collect = False ,ip : str = DEFAULT_IP, port : int = DEFAULT_PORT) -> Run:
     try:
         channel = grpc.insecure_channel(f"{ip}:{port}")
         stub = ctp_pb2_grpc.CtpServiceStub(channel)
