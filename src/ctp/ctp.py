@@ -13,14 +13,14 @@ from .manager import Manager
 
 stop_event = threading.Event()
 cur_run = Run()
-CONF_FILE_PATH = "../../conf.json"
+CONF_FILE_PATH = "conf.json"
 
-conf : Dict[any]= {}
+conf : Dict[str,any]= {}
 with open(CONF_FILE_PATH, 'r') as f:
     conf = json.load(f)
 
-DEFAULT_IP = conf.get("DEFAULT_IP", DEFAULT_IP)
-DEFAULT_PORT = conf.get("DEFAULT_PORT", DEFAULT_PORT)
+DEFAULT_IP = conf.get("DEFAULT_IP", "localhost")
+DEFAULT_PORT = conf.get("DEFAULT_PORT", 50057)
 
 
 
