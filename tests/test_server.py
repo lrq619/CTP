@@ -5,7 +5,7 @@ import time
 from threading import Thread
 
 # Append the path of the src directory
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import ctp
 from server import StartServer

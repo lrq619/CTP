@@ -7,7 +7,7 @@ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://
 ### Server:
 To start a server locally:
 ```python
-import cthenp as ctp
+import ctp
 ctp.start_listen(ip = "localhost", port=50057)
 ```
 ### Collect:

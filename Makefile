@@ -1,7 +1,7 @@
 all : build
 
 generate_proto:
-	@cd src/ctp/ctp_grpc/ && ./build.sh
+	@cd ctp/ctp_grpc/ && ./build.sh
 
 test: generate_proto
 	@pytest
