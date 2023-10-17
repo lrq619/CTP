@@ -10,17 +10,11 @@ from .ctp_grpc import ctp_pb2
 from .ctp_grpc import ctp_pb2_grpc
 from .utils import logger
 from .manager import Manager
+from .conf import *
 
 stop_event = threading.Event()
 cur_run = Run()
-CONF_FILE_PATH = "conf.json"
 
-conf : Dict[str,any]= {}
-with open(CONF_FILE_PATH, 'r') as f:
-    conf = json.load(f)
-
-DEFAULT_IP = conf.get("DEFAULT_IP", "localhost")
-DEFAULT_PORT = conf.get("DEFAULT_PORT", 50057)
 
 
 

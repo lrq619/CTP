@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cthenp"
-version = "0.0.6"
+version = "0.0.13"
 authors = [
   { name="LaiRuiqi", email="lrq619@outlook.com" },
 ]
@@ -16,8 +16,18 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+  "grpcio >= 1.15.0",
+  "google-api-python-client >= 2.0.0"
+]
 packages = [
   { include = "ctp" },
+]
+
+include = [
+  { path = "ctp/ctp_grpc/*.proto", format = "sditst" },
+  { path = "ctp/ctp_grpc/*_pb2.py", format = "both" },
+  { path = "ctp/ctp_grpc/*_pb2_grpc.py", format = "both" },
 ]
 
 [project.urls]

@@ -1,13 +1,25 @@
 import logging
 import sys
-from typing import List, Any, Optional, Type
+import os
+from typing import List, Any, Optional, Type, Dict
+import json
 
+from .conf import *
+
+
+log_path = DEFAULT_LOG_PATH
+if not os.path.exists(log_path):
+    os.makedirs(log_path)
+
+log_file = DEFAULT_LOG_FILE
+log_file_path = f"{log_path}/{log_file}"
 # Step 1: Set up the logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)  # Set the desired logging level here
 
+
 # Step 2: Create handlers
-file_handler = logging.FileHandler('/home/lrq619/proj/CTP/logs/ctp.log')  # You can replace 'logfile.log' with your desired log file name
+file_handler = logging.FileHandler(log_file_path)  # You can replace 'logfile.log' with your desired log file name
 stdout_handler = logging.StreamHandler(sys.stdout)
 
 # Step 3: Set log levels and formats
