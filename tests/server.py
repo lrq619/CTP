@@ -12,7 +12,7 @@ port = 50057
 
 class StartServer:
     def __init__(self, ip : str = "localhost", port : int = 50057) -> None:
-        self.ip = ip
+        self.ip = "localhost"
         self.port = port
 
     def __enter__(self):

@@ -39,26 +39,26 @@ def test_error_pipeline(capfd):
                 run.collect(label, height)
 
         time.sleep(1)
-        run = ctp.get_run(exp_name)
+        run = ctp.get_run(exp_name, ip=ip)
         assert run.run_id == -1
         assert run.status == ctp.RunStatus.OFFLINE
 
 def test_error_sync(capfd):
     with StartServer():
-        with ctp.append_run(exp_name) as run:
+        with ctp.append_run(exp_name, ip=ip) as run:
             assert run.run_id == 0
             assert run.status == ctp.RunStatus.COLLECT
             run.monitor(label, heights)
 
         time.sleep(1)
-        run = ctp.get_run(exp_name)
+        run = ctp.get_run(exp_name, ip=ip)
         assert run.run_id == 0
         assert run.status == ctp.RunStatus.PROCESS
         e = 250
         run.collect(label, e)
         run.stop_collect()
 
-        run = ctp.get_run(exp_name)
+        run = ctp.get_run(exp_name, ip=ip)
         assert run.run_id == 0
         assert run.status == ctp.RunStatus.PROCESS
         _heights = run.process(label)
