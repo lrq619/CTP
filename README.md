@@ -1,5 +1,27 @@
 # CTP
-A python data collection library 
+Collect Then Process: A python data collection library 
+
+What do you need to do if you are running some programs on the remote server and you want to collect some runtime data during program running, and process it on your local PC, e.g. plot a figure? See how many steps you need without ctp:
+* collect the data
+* serialize the data
+* download the data to your local computer through various ways: scp, ftp ...
+* deserialize the data on your local computer
+* process the data, e.g plot a figure
+
+Tired of all this? ctp now provides a easy to use solution of just Collect then Process:
+
+Collect on the remote cloud server:
+```python
+import ctp
+with ctp.append_run("my_experiment") as run:
+    run.collect("my_data", data)
+```
+Then Process on your local computer:
+```python
+import ctp
+with ctp.get_run("my_experiment") as run:
+    data = run.process("my_data")
+```
 ## Usage:
 ```bash
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple cthenp
@@ -18,9 +40,8 @@ run = ctp.append_run("sample_exp")
 ```
 This appends a new run of the experiment, to collect data to new run:
 ```python
-sample_data = run.collect("sample_data")
 for i in range(10):
-    sample_data.append(i)
+    run.collect("sample_data")
 ```
 Or you can also pass a list created by yourself by:
 ```python
@@ -33,6 +54,12 @@ After collecting data, finish collect and upload all data to server:
 ```python
 run.stop_collect()
 ```
+If you don't want to deal with start and stop by your self, you can:
+```python
+with ctp.append_run("sample_exp") as run:
+    ... ## your code here
+```
+will automatically upload all data once this block is finished
 
 ### Process
 To process data from other machines:
