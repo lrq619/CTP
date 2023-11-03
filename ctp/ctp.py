@@ -86,7 +86,13 @@ def stop_listen() -> None:
 
 def append_run(exp_name : str, ip : str = DEFAULT_IP, port : int = DEFAULT_PORT) -> Run:
     try:
-        channel = grpc.insecure_channel(f"{ip}:{port}")
+        options = [
+                ('grpc.keepalive_time_ms', 30000),  # send keepalive ping every 30 seconds
+                ('grpc.keepalive_timeout_ms', 10000),  # keepalive ping time out after 10 seconds
+                ('grpc.keepalive_permit_without_calls', True),  # allow keepalive pings when there are no calls
+                ('grpc.http2.min_time_between_pings_ms', 30000),  # minimum amount of time a ping would be sent without receiving any data frame
+            ]
+        channel = grpc.insecure_channel(f"{ip}:{port}", options=options)
         stub = ctp_pb2_grpc.CtpServiceStub(channel)
         request = ctp_pb2.AppendRunRequest(exp_name = exp_name)
         response = stub.AppendRun(request)
@@ -103,7 +109,13 @@ def append_run(exp_name : str, ip : str = DEFAULT_IP, port : int = DEFAULT_PORT)
 
 def get_run(exp_name : str, run_id : int = -1, is_collect = False ,ip : str = DEFAULT_IP, port : int = DEFAULT_PORT) -> Run:
     try:
-        channel = grpc.insecure_channel(f"{ip}:{port}")
+        options = [
+                ('grpc.keepalive_time_ms', 30000),  # send keepalive ping every 30 seconds
+                ('grpc.keepalive_timeout_ms', 10000),  # keepalive ping time out after 10 seconds
+                ('grpc.keepalive_permit_without_calls', True),  # allow keepalive pings when there are no calls
+                ('grpc.http2.min_time_between_pings_ms', 30000),  # minimum amount of time a ping would be sent without receiving any data frame
+            ]
+        channel = grpc.insecure_channel(f"{ip}:{port}", options=options)
         stub = ctp_pb2_grpc.CtpServiceStub(channel)
         request = ctp_pb2.GetRunRequest(exp_name = exp_name, run_id = run_id)
         response = stub.GetRun(request)
