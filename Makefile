@@ -8,7 +8,7 @@ generate_proto:
 	@cd ctp/ctp_grpc/ && ./build.sh
 
 
-build: generate_proto
+build: generate_proto freeze
 	@python -m build
 
 install: build
@@ -19,6 +19,7 @@ test: install
 
 upload: test
 	@python -m twine upload --repository testpypi $(WHL_FILE)
+
 
 freeze:
 	@pip freeze > requirements.txt
