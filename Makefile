@@ -1,16 +1,24 @@
+PACKAGE_NAME = cthenp
+VERSION = $(shell hatch version)
+WHL_FILE = dist/$(PACKAGE_NAME)-$(VERSION)-py3-none-any.whl
+
 all : build
 
 generate_proto:
 	@cd ctp/ctp_grpc/ && ./build.sh
 
-test: generate_proto
-	@pytest
 
-build: test
+build: generate_proto
 	@python -m build
 
-upload: build
-	@python -m twine upload --repository testpypi dist/*
+install: build
+	@pip install $(WHL_FILE) 
+
+test: install
+	@pytest
+
+upload: test
+	@python -m twine upload --repository testpypi $(WHL_FILE)
 
 freeze:
 	@pip freeze > requirements.txt

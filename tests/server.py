@@ -1,10 +1,6 @@
 import sys
 import os
 import random
-
-# Append the path of the src directory
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-
 import ctp
 
 ip = "localhost"
