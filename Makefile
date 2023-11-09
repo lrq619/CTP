@@ -12,6 +12,7 @@ build: generate_proto freeze
 	@python -m build
 
 install: build
+	@pip uninstall -y cthenp
 	@pip install $(WHL_FILE) 
 
 test: install

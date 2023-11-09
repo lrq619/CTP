@@ -1,6 +1,7 @@
 import sys
 import os
 import random
+import time
 import ctp
 
 ip = "localhost"
@@ -13,6 +14,8 @@ class StartServer:
 
     def __enter__(self):
         ctp.start_listen(self.ip, self.port) 
+        time.sleep(0.5)
+        
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         ctp.stop_listen()

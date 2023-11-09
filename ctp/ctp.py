@@ -13,7 +13,6 @@ from .manager import Manager
 from .conf import *
 
 stop_event = threading.Event()
-cur_run = Run()
 
 
 
@@ -103,8 +102,36 @@ def append_run(exp_name : str, ip : str = DEFAULT_IP, port : int = DEFAULT_PORT)
     except Exception as e:
         run = Run(exp_name, -1, status=RunStatus.OFFLINE)
         print(f"append a new run to expriment: {exp_name} failed! error: {e}")
-    cur_run = run
     return run
+
+def append_sync_run(exp_name : str, ip : str = DEFAULT_IP, port : int = DEFAULT_PORT) -> Run:
+    try:
+        options = [
+                ('grpc.keepalive_time_ms', 30000),  # send keepalive ping every 30 seconds
+                ('grpc.keepalive_timeout_ms', 10000),  # keepalive ping time out after 10 seconds
+                ('grpc.keepalive_permit_without_calls', True),  # allow keepalive pings when there are no calls
+                ('grpc.http2.min_time_between_pings_ms', 30000),  # minimum amount of time a ping would be sent without receiving any data frame
+            ]
+        channel = grpc.insecure_channel(f"{ip}:{port}", options=options)
+        stub = ctp_pb2_grpc.CtpServiceStub(channel)
+        request = ctp_pb2.AppendRunRequest(exp_name = exp_name)
+        response = stub.AppendRun(request)
+        run_id = response.run_id
+        run = Run(exp_name, run_id, status=RunStatus.COLLECT)
+
+        run_args = {
+            "stub": stub,
+            "sync": True
+        }
+
+        run.args = run_args
+
+        print(f"Append sync run success, current run: {run}")
+    except Exception as e:
+        run = Run(exp_name, -1, status=RunStatus.OFFLINE)
+        print(f"append a new run to expriment: {exp_name} failed! error: {e}")
+    return run
+
 
 
 def get_run(exp_name : str, run_id : int = -1, is_collect = False ,ip : str = DEFAULT_IP, port : int = DEFAULT_PORT) -> Run:
@@ -133,8 +160,37 @@ def get_run(exp_name : str, run_id : int = -1, is_collect = False ,ip : str = DE
     except Exception as e:
         run = Run(exp_name=exp_name)
         print(f"get a new run to experiment: {exp_name} failed! error: {e}")
-    global cur_run
-    print(f"global cur_run: {cur_run}")
-    cur_run = run
-    print(f"global cur_run after get: {cur_run}")
+    return run
+
+def get_sync_run(exp_name : str, run_id : int = -1, is_collect = False ,ip : str = DEFAULT_IP, port : int = DEFAULT_PORT) -> Run:
+    try:
+        options = [
+                ('grpc.keepalive_time_ms', 30000),  # send keepalive ping every 30 seconds
+                ('grpc.keepalive_timeout_ms', 10000),  # keepalive ping time out after 10 seconds
+                ('grpc.keepalive_permit_without_calls', True),  # allow keepalive pings when there are no calls
+                ('grpc.http2.min_time_between_pings_ms', 30000),  # minimum amount of time a ping would be sent without receiving any data frame
+            ]
+        channel = grpc.insecure_channel(f"{ip}:{port}", options=options)
+        stub = ctp_pb2_grpc.CtpServiceStub(channel)
+        request = ctp_pb2.GetRunRequest(exp_name = exp_name, run_id = run_id)
+        response = stub.GetRun(request)
+        records = pickle.loads(response.records_bytes)
+        run_id = response.run_id
+        if run_id < 0:
+            return Run()
+        run = Run(exp_name, run_id, status=RunStatus.PROCESS)
+        
+        if is_collect:
+            run.status = RunStatus.COLLECT
+            run_args = {
+                "stub": stub,
+                "sync": True
+            }
+
+            run.args = run_args
+        run.records = records
+        print(f"Get run success, current run: {run}")
+    except Exception as e:
+        run = Run(exp_name=exp_name)
+        print(f"get a new run to experiment: {exp_name} failed! error: {e}")
     return run
