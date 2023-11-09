@@ -6,7 +6,6 @@ cffi==1.16.0
 charset-normalizer==3.3.0
 click==8.1.7
 cryptography==41.0.4
-cthenp @ file:///home/lrq619/proj/CTP/dist/cthenp-0.1.2-py3-none-any.whl#sha256=9ac57ec5f403749b278108c33499eb531c710b5fcc1839490b4cfb348a99288b
 distlib==0.3.6
 docutils==0.20.1
 editables==0.5
