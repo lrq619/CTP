@@ -8,7 +8,7 @@ generate_proto:
 	@cd ctp/ctp_grpc/ && ./build.sh
 
 
-build: generate_proto freeze
+build: generate_proto
 	@python -m build
 
 install: build
